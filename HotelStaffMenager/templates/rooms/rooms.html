@@ -1,0 +1,9 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+    Rooms
+{% endblock %}
+
+{% for room in rooms %}
+<h1> Nazwa: {{room.color}}</h1>
+<p> miejsc: {{room.max_people}} </p>
+{% endfor %}
