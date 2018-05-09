@@ -1,0 +1,14 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Goście
+{% endblock %}
+{% block content %}
+
+{% for guest in guests %}
+<div>
+    <p>  <a href="{{ url_for('guests') }}/{{ guest.id}}"> {{guest.first_name}} {{guest.last_name}}</a> Zamelduj/Wymelduj </p>
+</div>
+
+{% endfor %}
+
+{% endblock %}

@@ -39,9 +39,11 @@ class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     color = db.Column(db.String(80), unique=True)
     max_people = db.Column(db.Integer)
+    stays = db.relationship('Stay', backref=db.backref('room'))
 
-    def __init__(self, color):
+    def __init__(self, color, max_people):
         self.color = color
+        self.max_people = max_people
 
     def _repr_(self):
         return '<Room %r>' % self.color
@@ -52,6 +54,28 @@ class Guest(db.Model):
     email = db.Column(db.String(255), unique=True)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
+    stays = db.relationship('Stay', backref=db.backref('guest'))
+
+    def __init__(self, email, first_name, last_name):
+        self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
+
+    def _repr_(self):
+        return '<Guest %r>' % self.email
+
+
+class Stay(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    start_at = db.Column(db.DateTime())
+    end_at = db.Column(db.DateTime())
+    guest_id = db.Column(db.Integer, db.ForeignKey('guest.id'))
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+
+    def __init__(self, id, start_at, end_at):
+        self.id = id
+        self.start_at = start_at
+        self.end_at = end_at
 
 
 # Setup Flask-Security
@@ -67,7 +91,7 @@ def index():
 @app.route('/profile/<email>')
 @login_required
 def profile(email):
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email).one_or_none()
     return render_template('profile.html', user=user)
 
 
@@ -80,18 +104,39 @@ def post_user():
     return redirect(url_for('/'))
 
 
-@app.route('/room/<color>')
+@app.route('/rooms/<color>')
 @login_required
 def room_info(color):
-    room = Room.query.filter_by(color=color).first()
-    return render_template('rooms/room_info.html', room=room)
+    room = Room.query.filter_by(color=color).one_or_none()
+    if room is None:
+        return render_template('/404.html')
+    else:
+        return render_template('rooms/room_info.html', room=room)
 
 
 @app.route('/rooms')
 @login_required
 def rooms():
     rooms_list = Room.query.all()
-    return render_template('rooms/rooms.html', rooms=rooms_list)
+    if rooms_list == []:
+        return render_template('rooms/sorry.html')
+    else:
+        return render_template('rooms/rooms.html', rooms=rooms_list)
+
+
+@app.route('/new_room', methods=['GET'])
+@login_required
+def new_room():
+    return render_template('/rooms/new.html')
+
+
+@app.route('/new_room', methods=['POST'])
+@login_required
+def create_room():
+    room = Room(request.form['color'], request.form['max_people'])
+    db.session.add(room)
+    db.session.commit()
+    return redirect(url_for('rooms'))
 
 
 @app.route('/new_guest', methods=['GET'])
@@ -106,7 +151,50 @@ def create_guest():
     guest = Guest(request.form['email'], request.form['first_name'], request.form['last_name'])
     db.session.add(guest)
     db.session.commit()
-    return redirect(url_for('/guests'))
+    return redirect(url_for('guests'))
+
+
+@app.route('/guests')
+@login_required
+def guests():
+    guests_list = Guest.query.all()
+    if guests_list == []:
+        return render_template('guests/sorry.html')
+    else:
+        return render_template('guests/guests.html', guests=guests_list)
+
+
+@app.route('/guests/<id>')
+@login_required
+def guest_info(id):
+    guest = Guest.query.filter_by(id=id).one_or_none()
+    if guest is None:
+        return render_template('/404.html')
+    else:
+        return render_template('guests/guest_info.html', guest=guest)
+
+
+@app.route('/guest/<id>/new_stay', methods=['GET'])
+@login_required
+def new_stay(id):
+    return render_template('/stays/new.html')
+
+
+@app.route('/guest/<id>/new_stay', methods=['POST'])
+@login_required
+def create_stay():
+
+    guest = Guest.query.filter_by(id=request.form['id']).one_or_none()
+    if guest is None:
+        return render_template('/404.html')
+    else:
+        room = Room.query.filter_by(color=color).one_or_none()
+        if room is None:
+            return render_template('/rooms/sorry.html')
+        stay = Stay()
+        db.session.add(guest_stays)
+        db.session.add(room_stays)
+        db.session.add(stay)
 
 
 if __name__ == "__main__":

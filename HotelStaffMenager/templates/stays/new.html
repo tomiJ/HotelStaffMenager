@@ -1,0 +1,21 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+New stay for...
+{% endblock %}
+{% block content %}
+
+      <form method="post" action="{{ url_for('new_stay') }}">
+        <p>
+              <label>Liczba osób: </label>
+              <input id="max_people" name="max_people" type="integer"/>
+        </p>
+
+        <p>
+              <label>Wybierz pokój: </label>
+              <input id="color" name="color" type="text"/>
+        </p>
+
+
+        <input type="submit" />
+    </form>
+{%endblock %}

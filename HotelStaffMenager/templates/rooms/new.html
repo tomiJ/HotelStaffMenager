@@ -1,0 +1,21 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+New guest
+{% endblock %}
+{% block content %}
+
+      <form method="post" action="/new_room">
+        <p>
+            <label>Kolor: </label>
+            <input id="color" name="color" type="text"/>
+        </p>
+
+        <p>
+              <label>Liczba osób: </label>
+              <input id="max_people" name="max_people" type="integer"/>
+        </p>
+
+
+        <input type="submit" />
+    </form>
+{%endblock %}
