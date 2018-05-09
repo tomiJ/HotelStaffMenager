@@ -38,12 +38,22 @@ class User(db.Model, UserMixin):
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     color = db.Column(db.String(80), unique=True)
+    number = db.Column(db.Integer, unique=True)
     max_people = db.Column(db.Integer)
+    extra_places = db.Column(db.Integer)
+    bath = db.Column(db.Boolean)
+    shower = db.Column(db.Boolean)
+    dog = db.Column(db.Boolean)
     stays = db.relationship('Stay', backref=db.backref('room'))
 
-    def __init__(self, color, max_people):
+    def __init__(self, color, number, max_people, extra_places, bath, shower, dog):
         self.color = color
+        self.number = number
         self.max_people = max_people
+        self.extra_places = extra_places
+        self.bath = bath
+        self.shower = shower
+        self.dog = dog
 
     def _repr_(self):
         return '<Room %r>' % self.color
@@ -52,14 +62,16 @@ class Room(db.Model):
 class Guest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
+    phone = db.Column(db.String(12), unique=True)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
     stays = db.relationship('Stay', backref=db.backref('guest'))
 
-    def __init__(self, email, first_name, last_name):
+    def __init__(self, email, first_name, last_name, phone):
         self.email = email
         self.first_name = first_name
         self.last_name = last_name
+        self.phone = phone
 
     def _repr_(self):
         return '<Guest %r>' % self.email
@@ -130,10 +142,20 @@ def new_room():
     return render_template('/rooms/new.html')
 
 
+def checkbox_value(f):
+
+    if request.form.getlist(f) == ['on']:
+        return True
+    else:
+        return False
+
+
 @app.route('/new_room', methods=['POST'])
 @login_required
 def create_room():
-    room = Room(request.form['color'], request.form['max_people'])
+
+    room = Room(request.form['color'],request.form['number'], request.form['max_people'], request.form['extra_people'],
+                checkbox_value('bath'), checkbox_value('shower'), checkbox_value('dog'))
     db.session.add(room)
     db.session.commit()
     return redirect(url_for('rooms'))
@@ -148,7 +170,7 @@ def new_guest():
 @app.route('/new_guest', methods=['POST'])
 @login_required
 def create_guest():
-    guest = Guest(request.form['email'], request.form['first_name'], request.form['last_name'])
+    guest = Guest(request.form['email'], request.form['first_name'], request.form['last_name'], request.form['phone'])
     db.session.add(guest)
     db.session.commit()
     return redirect(url_for('guests'))
@@ -174,13 +196,13 @@ def guest_info(id):
         return render_template('guests/guest_info.html', guest=guest)
 
 
-@app.route('/guest/<id>/new_stay', methods=['GET'])
+@app.route('/new_stay', methods=['GET'])
 @login_required
-def new_stay(id):
+def new_stay():
     return render_template('/stays/new.html')
 
 
-@app.route('/guest/<id>/new_stay', methods=['POST'])
+@app.route('/guests/<id>/new_stay', methods=['POST'])
 @login_required
 def create_stay():
 
