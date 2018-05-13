@@ -44,7 +44,7 @@ class Room(db.Model):
     bath = db.Column(db.Boolean)
     shower = db.Column(db.Boolean)
     dog = db.Column(db.Boolean)
-    stays = db.relationship('Stay', backref=db.backref('room'))
+   # stays = db.relationship('Stay', backref=db.backref('room'))
 
     def __init__(self, color, number, max_people, extra_places, bath, shower, dog):
         self.color = color
@@ -65,7 +65,7 @@ class Guest(db.Model):
     phone = db.Column(db.String(12), unique=True)
     first_name = db.Column(db.String(30))
     last_name = db.Column(db.String(30))
-    stays = db.relationship('Stay', backref=db.backref('guest'))
+  #  stays = db.relationship('Stay', backref=db.backref('guest'))
 
     def __init__(self, email, first_name, last_name, phone):
         self.email = email
@@ -82,7 +82,9 @@ class Stay(db.Model):
     start_at = db.Column(db.DateTime())
     end_at = db.Column(db.DateTime())
     guest_id = db.Column(db.Integer, db.ForeignKey('guest.id'))
+    guest = db.relationship('Guest')
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    room = db.relationship('Room')
 
     def __init__(self, start_at, end_at, guest_id, room_id):
         self.start_at = start_at
@@ -212,6 +214,16 @@ def create_stay(guest_id):
     db.session.add(stay)
     db.session.commit()
     return redirect(url_for('stays'))
+
+
+@app.route('/stays')
+@login_required
+def stays():
+    stays_list = Stay.query.all()
+    if stays_list == []:
+        return render_template('stays/sorry.html')
+    else:
+        return render_template('stays/stays.html', stays=stays_list)
 
 
 if __name__ == "__main__":

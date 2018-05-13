@@ -5,14 +5,10 @@ New stay for...
 {% block content %}
 
       <form method="post" action="{{ url_for('.create_stay', guest_id = guest.id) }}">
-        <p>
-              <label>Liczba osób: </label>
-              <input id="max_people" name="max_people" type="integer"/>
-        </p>
 
         <p>
               <label>Wybierz pokój: </label>
-              <input id="color" name="color" type="text"/>
+              <input id="room" name="room" type="text"/>
         </p>
 
           <p>

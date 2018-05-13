@@ -5,8 +5,9 @@ Wizyty
 {% block content %}
 
 {% for stay in stays %}
+Pokój Gość od do 
 <div>
-    <p> {{stay_room.id}} {{stay.guest_id}}
+    <p> {{stay.room_id}} {{stay.guest_id}} {{stay.start_at}} {{stay.end_at}}
     </p>
 </div>
 
