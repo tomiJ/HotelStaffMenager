@@ -4,6 +4,8 @@
     <list default="true" id="f9d91f4e-35e2-44c7-930c-019f7e20e82f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelStaffMenager/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/HotelStaffMenager/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelStaffMenager/templates/guests/guest_info.html" beforeDir="false" afterPath="$PROJECT_DIR$/HotelStaffMenager/templates/guests/guest_info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelStaffMenager/templates/rooms/room_info.html" beforeDir="false" afterPath="$PROJECT_DIR$/HotelStaffMenager/templates/rooms/room_info.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelStaffMenager/templates/stays/new.html" beforeDir="false" afterPath="$PROJECT_DIR$/HotelStaffMenager/templates/stays/new.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelStaffMenager/templates/stays/stays.html" beforeDir="false" afterPath="$PROJECT_DIR$/HotelStaffMenager/templates/stays/stays.html" afterDir="false" />
     </list>
@@ -19,8 +21,8 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/HotelStaffMenager/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="222" column="15" lean-forward="true" selection-start-line="222" selection-start-column="15" selection-end-line="222" selection-end-column="15" />
+            <state relative-caret-position="559">
+              <caret line="92" column="32" lean-forward="true" selection-start-line="92" selection-start-column="32" selection-end-line="92" selection-end-column="32" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -40,17 +42,8 @@
       <file leaf-file-name="stays.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/stays/stays.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="new.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/guests/new.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="65">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="165">
+              <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -58,17 +51,8 @@
       <file leaf-file-name="new.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/stays/new.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="new.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/rooms/new.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="38" column="37" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
+            <state relative-caret-position="290">
+              <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -85,8 +69,17 @@
       <file leaf-file-name="room_info.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/rooms/room_info.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+            <state>
+              <caret selection-end-line="21" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="guest_info.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/guests/guest_info.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -118,11 +111,11 @@
         <option value="$PROJECT_DIR$/HotelStaffMenager/templates/rooms/sorry.html" />
         <option value="$PROJECT_DIR$/HotelStaffMenager/.gitignore" />
         <option value="$PROJECT_DIR$/HotelStaffMenager/templates/guests/new.html" />
-        <option value="$PROJECT_DIR$/HotelStaffMenager/templates/guests/guest_info.html" />
         <option value="$PROJECT_DIR$/HotelStaffMenager/templates/rooms/rooms.html" />
-        <option value="$PROJECT_DIR$/HotelStaffMenager/templates/rooms/room_info.html" />
         <option value="$PROJECT_DIR$/HotelStaffMenager/templates/rooms/new.html" />
         <option value="$PROJECT_DIR$/HotelStaffMenager/templates/guests/guests.html" />
+        <option value="$PROJECT_DIR$/HotelStaffMenager/templates/rooms/room_info.html" />
+        <option value="$PROJECT_DIR$/HotelStaffMenager/templates/guests/guest_info.html" />
         <option value="$PROJECT_DIR$/HotelStaffMenager/templates/stays/new.html" />
         <option value="$PROJECT_DIR$/HotelStaffMenager/app.py" />
         <option value="$PROJECT_DIR$/HotelStaffMenager/templates/stays/stays.html" />
@@ -630,31 +623,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/guests/guest_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/rooms/rooms.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/rooms/room_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/security/login_user.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="19" selection-start-column="19" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -665,13 +637,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/guests/guests.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/guests/new.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="65">
@@ -679,17 +644,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/guests/guests.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="14" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/security/login_user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/rooms/room_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="21" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/guests/guest_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/stays/new.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="290">
+          <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/HotelStaffMenager/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="222" column="15" lean-forward="true" selection-start-line="222" selection-start-column="15" selection-end-line="222" selection-end-column="15" />
+        <state relative-caret-position="559">
+          <caret line="92" column="32" lean-forward="true" selection-start-line="92" selection-start-column="32" selection-end-line="92" selection-end-column="32" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -698,8 +691,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/HotelStaffMenager/templates/stays/stays.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        <state relative-caret-position="165">
+          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
         </state>
       </provider>
     </entry>

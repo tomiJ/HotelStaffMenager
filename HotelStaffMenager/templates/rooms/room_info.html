@@ -1,15 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pokój | {{room.color}}</title>
-</head>
-<body>
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Pokój | {{room.color}}
+{% endblock %}
+{% block content %}
 
 <h1> Pokój {{room.color}}</h1>
-<h1> Liczba miejsc: {{room.max_people}} + {{room.extra_places}}</h1>
-Wanna {{room.bath}}
-Prysznic {{room.shower}}
-Pies {{room.dog}}
-</body>
-</html>
+<div>
+    <p>  Liczba miejsc: {{room.max_people}} + {{room.extra_places}}
+    </p>
+    <p>
+        Wanna {{room.bath}}
+    </p>
+    <p>
+        Prysznic {{room.shower}}
+    </p>
+    <p>
+        Pies {{room.dog}}
+    </p>
+</div>
+
+{% endblock %}

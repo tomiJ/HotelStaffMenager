@@ -13,8 +13,8 @@ app.config['SECURITY_PASSWORD_SALT'] = '$2a$16$PnnIgfMwkOjGX4SkHqSOPO'
 db = SQLAlchemy(app)
 
 roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+    db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+    db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
 
 class Role(db.Model, RoleMixin):
@@ -85,12 +85,14 @@ class Stay(db.Model):
     guest = db.relationship('Guest')
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     room = db.relationship('Room')
+    num_of_people = db.Column(db.Integer)
 
-    def __init__(self, start_at, end_at, guest_id, room_id):
+    def __init__(self, start_at, end_at, guest_id, room_id, people):
         self.start_at = start_at
         self.end_at = end_at
         self.guest_id = guest_id
         self.room_id = room_id
+        self.num_of_people = people
 
 
 # Setup Flask-Security
@@ -193,10 +195,11 @@ def guests():
 @login_required
 def guest_info(id):
     guest = Guest.query.filter_by(id=id).one_or_none()
+    stays = Stay.query.filter_by(guest_id=id)
     if guest is None:
         return render_template('/404.html')
     else:
-        return render_template('guests/guest_info.html', guest=guest)
+        return render_template('guests/guest_info.html', guest=guest, stays=stays)
 
 
 @app.route('/new_stay/<guest_id>', methods=['GET'])
@@ -210,7 +213,7 @@ def create_stay(guest_id):
     color = request.form['room']
     room = Room.query.filter_by(color=color).one_or_none()
     room_id = room.id
-    stay = Stay(request.form['start'], request.form['end'], guest_id, room_id)
+    stay = Stay(request.form['start'], request.form['end'], guest_id, room_id, request.form['people'])
     db.session.add(stay)
     db.session.commit()
     return redirect(url_for('stays'))
