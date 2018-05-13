@@ -1,0 +1,15 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Wizyty
+{% endblock %}
+{% block content %}
+
+{% for stay in stays %}
+<div>
+    <p> {{stay_room.id}} {{stay.guest_id}}
+    </p>
+</div>
+
+{% endfor %}
+
+{% endblock %}

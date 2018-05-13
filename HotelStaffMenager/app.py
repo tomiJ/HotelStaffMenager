@@ -4,7 +4,7 @@ from flask import request, redirect, url_for, render_template
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ukpesblq:0-iHLK1g9r2_KB_jynCgCHOnQ7nepKcO@dumbo.db.elephantsql.com:5432/ukpesblq'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ieranesk:K7cR_v0fvj4wFJBSs1hF1f0DJmY9B_Zb@elmer.db.elephantsql.com:5432/ieranesk'
 app.config['SECRET_KEY'] = 'super-secret'
 app.config['SECURITY_REGISTERABLE'] = True
 app.debug = True
@@ -20,15 +20,15 @@ roles_users = db.Table('roles_users',
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
-    description = db.Column(db.String(255))
+    description = db.Column(db.String(30))
 
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
-    first_name = db.Column(db.String(255), unique=True)
-    last_name = db.Column(db.String(255), unique=True)
+    first_name = db.Column(db.String(30), unique=True)
+    last_name = db.Column(db.String(30), unique=True)
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
     roles = db.relationship('Role', secondary=roles_users,
@@ -61,10 +61,10 @@ class Room(db.Model):
 
 class Guest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(255), unique=True)
+    email = db.Column(db.String(30), unique=True)
     phone = db.Column(db.String(12), unique=True)
-    first_name = db.Column(db.String(255))
-    last_name = db.Column(db.String(255))
+    first_name = db.Column(db.String(30))
+    last_name = db.Column(db.String(30))
     stays = db.relationship('Stay', backref=db.backref('guest'))
 
     def __init__(self, email, first_name, last_name, phone):
@@ -84,10 +84,11 @@ class Stay(db.Model):
     guest_id = db.Column(db.Integer, db.ForeignKey('guest.id'))
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
 
-    def __init__(self, id, start_at, end_at):
-        self.id = id
+    def __init__(self, start_at, end_at, guest_id, room_id):
         self.start_at = start_at
         self.end_at = end_at
+        self.guest_id = guest_id
+        self.room_id = room_id
 
 
 # Setup Flask-Security
@@ -196,27 +197,21 @@ def guest_info(id):
         return render_template('guests/guest_info.html', guest=guest)
 
 
-@app.route('/new_stay', methods=['GET'])
+@app.route('/new_stay/<guest_id>', methods=['GET'])
 @login_required
-def new_stay():
-    return render_template('/stays/new.html')
+def new_stay(guest_id):
+    return render_template('stays/new.html', guest=Guest.query.filter_by(id=guest_id).one_or_none())
 
 
-@app.route('/guests/<id>/new_stay', methods=['POST'])
-@login_required
-def create_stay():
-
-    guest = Guest.query.filter_by(id=request.form['id']).one_or_none()
-    if guest is None:
-        return render_template('/404.html')
-    else:
-        room = Room.query.filter_by(color=color).one_or_none()
-        if room is None:
-            return render_template('/rooms/sorry.html')
-        stay = Stay()
-        db.session.add(guest_stays)
-        db.session.add(room_stays)
-        db.session.add(stay)
+@app.route('/new_stay/<guest_id>', methods=['POST'])
+def create_stay(guest_id):
+    color = request.form['room']
+    room = Room.query.filter_by(color=color).one_or_none()
+    room_id = room.id
+    stay = Stay(request.form['start'], request.form['end'], guest_id, room_id)
+    db.session.add(stay)
+    db.session.commit()
+    return redirect(url_for('stays'))
 
 
 if __name__ == "__main__":
