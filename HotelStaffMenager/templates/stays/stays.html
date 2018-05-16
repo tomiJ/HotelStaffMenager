@@ -1,0 +1,28 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Wizyty
+{% endblock %}
+{% block content %}
+
+<table>
+    <tr>
+        <th> Pokój </th>
+        <th> Gość </th>
+        <th> od </th>
+        <th> do </th>
+        <th>osób </th>
+    </tr>
+    {% for stay in stays %}
+    <tr>
+        <td> {{stay.room.color}} </td>
+        <td> {{stay.guest.first_name}} {{stay.guest.last_name}} </td>
+        <td> {{stay.start_at}} </td>
+        <td> {{stay.end_at}} </td>
+        <td> {{stay.num_of_people}} </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}

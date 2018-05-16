@@ -1,0 +1,19 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Pokoje
+{% endblock %}
+{% block content %}
+
+
+{% for room in rooms %}
+<div class="roomListItem">
+    <h2><a href="{{ url_for('rooms') }}/{{ room.color}}"> {{room.color}}</a></h2>
+    <p> miejsc: {{room.max_people}} + {{room.extra_places}} </p>
+
+    <p> stan: </p>
+</div>
+
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+New guest
+{% endblock %}
+{% block content %}
+
+      <form method="post" action="/new_room">
+        <p>
+            <label>Kolor: </label>
+            <input id="color" name="color" type="text"/>
+        </p>
+
+          <p>
+            <label>Numer: </label>
+            <input id="number" name="number" type="number"/>
+        </p>
+
+        <p>
+              <label>Liczba osób: </label>
+              <input id="max_people" name="max_people" type="number"/>
+        </p>
+
+        <p>
+            <label>Dodatkowe miejsca: </label>
+            <input id="extra_people" name="extra_people" type="number"/>
+        </p>
+
+                <p>
+            <label>Wanna: </label>
+            <input id="bath" name="bath" type="checkbox"/>
+        </p>
+
+        <p>
+            <label>Prysznic: </label>
+            <input id="shower" name="shower" type="checkbox"/>
+        </p>
+        <p>
+            <label>Możliwość pobytu z psem: </label>
+            <input id="dog" name="dog" type="checkbox"/>
+        </p>
+
+
+        <input type="submit" />
+    </form>
+{%endblock %}

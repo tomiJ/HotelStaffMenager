@@ -1,0 +1,22 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Pokój | {{room.color}}
+{% endblock %}
+{% block content %}
+
+<h1> Pokój {{room.color}}</h1>
+<div>
+    <p>  Liczba miejsc: {{room.max_people}} + {{room.extra_places}}
+    </p>
+    <p>
+        Wanna {{room.bath}}
+    </p>
+    <p>
+        Prysznic {{room.shower}}
+    </p>
+    <p>
+        Pies {{room.dog}}
+    </p>
+</div>
+
+{% endblock %}

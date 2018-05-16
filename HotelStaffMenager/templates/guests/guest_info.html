@@ -1,0 +1,27 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Gość | {{guest.first_name}} {{guest.last_name}}
+{% endblock %}
+{% block content %}
+
+
+<h1> {{guest.first_name}} {{guest.last_name}} </h1>
+<p> Tel: {{guest.phone}} </p>
+<p> Mail: {{guest.email}}</p>
+
+<h2> Historia pobytów </h2>
+<table>
+    <tr>
+        <th> Pokój </th>
+        <th> od </th>
+        <th> do </th>
+    </tr>
+    {% for stay in stays %}
+    <tr>
+        <td> {{stay.room.color}} </td>
+        <td> {{stay.start_at}} </td>
+        <td> {{stay.end_at}} </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
