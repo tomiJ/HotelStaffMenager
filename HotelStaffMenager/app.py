@@ -2,6 +2,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import request, redirect, url_for, render_template
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
+from flask_moment import Moment
+import datetime
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ieranesk:K7cR_v0fvj4wFJBSs1hF1f0DJmY9B_Zb@elmer.db.elephantsql.com:5432/ieranesk'
@@ -10,7 +13,11 @@ app.config['SECURITY_REGISTERABLE'] = True
 app.debug = True
 app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
 app.config['SECURITY_PASSWORD_SALT'] = '$2a$16$PnnIgfMwkOjGX4SkHqSOPO'
+app.jinja_env.globals['datetime'] = datetime
+app.jinja_env.globals['moment'] = Moment(app)
+moment = Moment(app)
 db = SQLAlchemy(app)
+
 
 roles_users = db.Table('roles_users',
     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
@@ -102,7 +109,11 @@ security = Security(app, user_datastore)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    rooms_list = Room.query.all()
+    if rooms_list == []:
+        return render_template('rooms/sorry.html')
+    else:
+        return render_template('index.html', rooms=rooms_list)
 
 
 @app.route('/profile/<email>')
@@ -202,17 +213,17 @@ def guest_info(id):
         return render_template('guests/guest_info.html', guest=guest, stays=stays)
 
 
-@app.route('/new_stay/<guest_id>', methods=['GET'])
+@app.route('/new_stay/room/<room_id>/from<date_start>to<date_end>', methods=['GET'])
 @login_required
-def new_stay(guest_id):
-    return render_template('stays/new.html', guest=Guest.query.filter_by(id=guest_id).one_or_none())
+def new_stay(room_id, date_start, date_end):
+    return render_template('stays/new.html', fr=date_start, to=date_end, room=Room.query.filter_by(id=room_id).one_or_none())
 
 
-@app.route('/new_stay/<guest_id>', methods=['POST'])
-def create_stay(guest_id):
-    color = request.form['room']
-    room = Room.query.filter_by(color=color).one_or_none()
-    room_id = room.id
+@app.route('/new_stay/room/<room_id>', methods=['POST'])
+def create_stay(room_id):
+    id = request.form['guest']
+    guest = Guest.query.filter_by(id=id).one_or_none()
+    guest_id = guest.id
     stay = Stay(request.form['start'], request.form['end'], guest_id, room_id, request.form['people'])
     db.session.add(stay)
     db.session.commit()
