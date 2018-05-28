@@ -4,21 +4,21 @@ New stay for...
 {% endblock %}
 {% block content %}
 
-      <form method="post" action="{{ url_for('.create_stay', guest_id = guest.id) }}">
+      <form method="post" action="{{ url_for('.create_stay', room_id = room.id) }}">
 
         <p>
-              <label>Wybierz pokój: </label>
-              <input id="room" name="room" type="text"/>
+              <label>Wybierz gościa: </label>
+              <input id="guest" name="guest" type="text"/>
         </p>
 
           <p>
               <label>Od: </label>
-              <input id="start" name="start" type="datetime-local"/>
+              <input id="start" name="start" type="datetime-local" value="{{fr}}T14:00"/>
           </p>
 
           <p>
               <label>Do: </label>
-              <input id="end" name="end" type="datetime-local"/>
+              <input id="end" name="end" type="datetime-local" value="{{to}}T11:00"/>
           </p>
           <p>
               <label>Liczba osób: </label>

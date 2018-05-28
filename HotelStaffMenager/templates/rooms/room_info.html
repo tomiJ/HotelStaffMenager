@@ -19,4 +19,21 @@ Pokój | {{room.color}}
     </p>
 </div>
 
+<h2> Historia pobytów </h2>
+<table>
+    <tr>
+        <th> Gość </th>
+        <th> od </th>
+        <th> do </th>
+    </tr>
+    {% for stay in stays %}
+    <tr>
+        <td> {{stay.guest.first_name}} {{stay.guest.last_name}} </td>
+        <td> {{stay.start_at}} </td>
+        <td> {{stay.end_at}} </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
 {% endblock %}

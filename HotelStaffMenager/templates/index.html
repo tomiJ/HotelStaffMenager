@@ -3,3 +3,37 @@
     {% block title %}
     Hotel Manager
     {% endblock %}
+
+   {% block content %}
+    <table>
+        <tr>
+            <th>Pokój</th>
+            <th>{{moment().format('dddd')}}</th>
+            <th>{{moment(datetime.date.today() + datetime.timedelta(days=1)).format('dddd')}}</th>
+            <th>{{moment(datetime.date.today() + datetime.timedelta(days=2)).format('dddd')}}</th>
+            <th>{{moment(datetime.date.today() + datetime.timedelta(days=3)).format('dddd')}}</th>
+            <th>{{moment(datetime.date.today() + datetime.timedelta(days=4)).format('dddd')}}</th>
+            <th>{{moment(datetime.date.today() + datetime.timedelta(days=5)).format('dddd')}}</th>
+            <th>{{moment(datetime.date.today() + datetime.timedelta(days=6)).format('dddd')}}</th>
+
+
+        </tr>
+           {% for room in rooms %}
+
+        <tr>
+            <th>{{room.color}}</th>
+            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today(), date_end = datetime.date.today() + datetime.timedelta(days=1) )}}">Rezerwuj</a></td>
+            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=1), date_end = datetime.date.today() + datetime.timedelta(days=2) )}}">Rezerwuj</a></td>
+            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=2), date_end = datetime.date.today() + datetime.timedelta(days=3) )}}">Rezerwuj</a></td>
+            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=3), date_end = datetime.date.today() + datetime.timedelta(days=4) )}}">Rezerwuj</a></td>
+            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=4), date_end = datetime.date.today() + datetime.timedelta(days=5) )}}">Rezerwuj</a></td>
+            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=5), date_end = datetime.date.today() + datetime.timedelta(days=6) )}}">Rezerwuj</a></td>
+            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=6), date_end = datetime.date.today() + datetime.timedelta(days=7) )}}">Rezerwuj</a></td>
+
+
+        </tr>
+        {% endfor %}
+    </table>
+
+
+   {% endblock %}
