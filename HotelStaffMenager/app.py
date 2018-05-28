@@ -7,7 +7,7 @@ import datetime
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ieranesk:K7cR_v0fvj4wFJBSs1hF1f0DJmY9B_Zb@elmer.db.elephantsql.com:5432/ieranesk'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://s407221:lyprcalescalsti@psql.wmi.amu.edu.pl/s407221'
 app.config['SECRET_KEY'] = 'super-secret'
 app.config['SECURITY_REGISTERABLE'] = True
 app.debug = True
