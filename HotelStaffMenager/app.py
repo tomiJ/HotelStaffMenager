@@ -4,6 +4,8 @@ from flask import request, redirect, url_for, render_template
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 from flask_moment import Moment
 import datetime
+import json
+from flaskext.jsonify import jsonify
 
 
 app = Flask(__name__)
@@ -88,11 +90,14 @@ class Stay(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     start_at = db.Column(db.DateTime())
     end_at = db.Column(db.DateTime())
+    start_end_constraint = db.CheckConstraint('end_at > start_at')
     guest_id = db.Column(db.Integer, db.ForeignKey('guest.id'))
     guest = db.relationship('Guest')
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     room = db.relationship('Room')
     num_of_people = db.Column(db.Integer)
+    np_constraint = db.CheckConstraint('num_of_people > 0')
+    active = db.Column(db.Boolean)
 
     def __init__(self, start_at, end_at, guest_id, room_id, people):
         self.start_at = start_at
@@ -109,11 +114,12 @@ security = Security(app, user_datastore)
 
 @app.route('/')
 def index():
+    today = datetime.date.today()
     rooms_list = Room.query.all()
     if rooms_list == []:
         return render_template('rooms/sorry.html')
     else:
-        return render_template('index.html', rooms=rooms_list)
+        return render_template('index.html', rooms=rooms_list, today=today)
 
 
 @app.route('/profile/<email>')
@@ -250,6 +256,31 @@ def stays():
     else:
         return render_template('stays/stays.html', stays=stays_list)
 
+
+@app.route("/getReservationList")
+@jsonify()
+def get_reservation_list():
+    try:
+        stays_list = Stay.query.all()
+        # Initialize a employee list
+        reservation_list = []
+
+        # create a instances for filling up employee list
+        for stay in stays_list:
+            res = {
+                'title': "pokój" + stay.room.color +"/" + stay.guest.last_name,
+                'start': str(stay.start_at),
+                'end': str(stay.end_at)
+            }
+            reservation_list.append(res)
+
+    # convert to json data
+        jsonStr = json.dumps(reservation_list)
+
+    except ValueError:
+        print("Error")
+
+    return reservation_list
 
 if __name__ == "__main__":
     app.run()
