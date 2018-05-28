@@ -9,8 +9,8 @@
         <tr>
             <th>Pokój</th>
             <th>{{moment().format('dddd')}}</th>
-            <th>{{moment(datetime.date.today() + datetime.timedelta(days=1)).format('dddd')}}</th>
-            <th>{{moment(datetime.date.today() + datetime.timedelta(days=2)).format('dddd')}}</th>
+            <th>{{moment(today + datetime.timedelta(days=1)).format('dddd')}}</th>
+            <th>{{moment(today + datetime.timedelta(days=2)).format('dddd')}}</th>
             <th>{{moment(datetime.date.today() + datetime.timedelta(days=3)).format('dddd')}}</th>
             <th>{{moment(datetime.date.today() + datetime.timedelta(days=4)).format('dddd')}}</th>
             <th>{{moment(datetime.date.today() + datetime.timedelta(days=5)).format('dddd')}}</th>
@@ -34,6 +34,7 @@
         </tr>
         {% endfor %}
     </table>
+   <div id="calendar"> </div>
 
 
    {% endblock %}

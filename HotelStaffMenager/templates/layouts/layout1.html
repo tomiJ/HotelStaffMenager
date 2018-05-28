@@ -9,6 +9,9 @@
     <meta name="author" content="">
     {{ moment.include_jquery() }}
     {{ moment.include_moment() }}
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src='/static/js/fullcalendar.js'></script>
+
 
     <title> {% block title %}{% endblock %}</title>
 
@@ -25,6 +28,8 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/freelancer.min.css" rel="stylesheet">
+    <link href="/static/css/fullcalendar.css" rel="stylesheet">
+
 
   </head>
   <body>
@@ -66,7 +71,7 @@
 
 
     <!-- Bootstrap core JavaScript -->
-    <script src="/static/vendor/jquery/jquery.min.js"></script>
+
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
@@ -79,7 +84,8 @@
 
     <!-- Custom scripts for this template -->
     <script src="/static/js/freelancer.min.js"></script>
-    <script src="/static/js/moment-with-locales.js"></script>
+   <script src='/static/js/calendar_loader.js'></script>
+
 
   </body>
 
