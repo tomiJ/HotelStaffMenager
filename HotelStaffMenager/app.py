@@ -131,6 +131,17 @@ def post_user():
     db.session.commit()
     return redirect(url_for('/'))
 
+@app.route('/users')
+@login_required
+def users():
+    user_list = User.query.all()
+
+    if user_list == []:
+        return render_template('users/sorry.html')
+    else:
+        return render_template('users/users.html', users=user_list)
+
+
 
 @app.route('/rooms/<color>')
 @login_required

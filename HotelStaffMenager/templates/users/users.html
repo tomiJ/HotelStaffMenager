@@ -1,0 +1,25 @@
+
+
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Pracownicy - uprawnienia
+{% endblock %}
+{% block content %}
+
+<table>
+    <tr>
+        <th> Email/Login </th>
+        <th> Imię </th>
+        <th> Nazwisko </th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td> {{user.email}} </td>
+        <td> {{user.first_name}}  </td>
+        <td> {{user.last_name}} </td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
