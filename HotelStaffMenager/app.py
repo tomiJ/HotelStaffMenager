@@ -4,9 +4,10 @@ from sqlalchemy import and_, or_, not_
 from flask import request, redirect, url_for, render_template
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 from flask_moment import Moment
-import datetime
+import datetime,os
 import json
 from flaskext.jsonify import jsonify
+from sqlalchemy import desc
 
 
 app = Flask(__name__)
@@ -54,9 +55,11 @@ class Room(db.Model):
     bath = db.Column(db.Boolean)
     shower = db.Column(db.Boolean)
     dog = db.Column(db.Boolean)
-   # stays = db.relationship('Stay', backref=db.backref('room'))
+    state = db.Column(db.String(30))
+    rented = db.Column(db.Boolean)
+  #  stays = db.relationship('Stay', backref=db.backref('room'))
 
-    def __init__(self, color, number, max_people, extra_places, bath, shower, dog):
+    def __init__(self, color, number, max_people, extra_places, bath, shower, dog, state, rented):
         self.color = color
         self.number = number
         self.max_people = max_people
@@ -64,6 +67,8 @@ class Room(db.Model):
         self.bath = bath
         self.shower = shower
         self.dog = dog
+        self.state = state
+        self.rented = rented
 
     def _repr_(self):
         return '<Room %r>' % self.color
@@ -137,8 +142,6 @@ def post_user():
     user = User(request.form['email'], request.form['password'], request.form['first_name'], request.form['last_name'])
     db.session.add(user)
     db.session.commit()
-    return redirect(url_for('/'))
-
 @app.route('/users')
 @login_required
 def users():
@@ -164,6 +167,7 @@ def room_info(color):
 @login_required
 def rooms():
     rooms_list = Room.query.all()
+    
     if rooms_list == []:
         return render_template('rooms/sorry.html')
     else:
@@ -218,6 +222,21 @@ def create_room():
     db.session.add(room)
     db.session.commit()
     return redirect(url_for('rooms'))
+
+@app.route('/rooms/<id>', methods=['POST'])
+@login_required
+def send_state(id):
+    room = Room.query.filter_by(id=id).one_or_none()
+    if room.rented:
+      room.rented = False
+    else:
+      room.rented = True
+    db.session.commit()
+    return redirect( url_for('rooms'))
+
+
+
+
 
 
 @app.route('/new_guest', methods=['GET'])
