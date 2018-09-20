@@ -1,10 +1,12 @@
 
-   {% extends "layouts/layout1.html" %}
+    {% extends "layouts/layout1.html" %}
     {% block title %}
     Hotel Manager
     {% endblock %}
 
    {% block content %}
+    <!---
+    TABLE WITH RESERVATION BUTTONS - DEPRECATED
     <table>
         <tr>
             <th>Pokój</th>
@@ -34,7 +36,60 @@
         </tr>
         {% endfor %}
     </table>
+    --->
+   <div id="datepicker">
+       <form method="get" action="{{ url_for('room_search')}}">
+           <p>
+               Od <input type="text" name="start" id="search_checkin"/>
+           </p>
+           <p>
+               Do <input type="text" name ="end" id="search_checkout"/>
+           </p>
+           <p>
+               Dla ilu osób? <input type="number" name="adults" min="1" max="20" default="2"/>
+           </p>
+           <input type="submit"/>
+       </form>
+   </div>
+
+    <script>
+    if($('#search_checkin, #search_checkout').length){
+
+    var currentDate = moment().format("DD-MM-YYYY");
+
+    $('#search_checkin, #search_checkout').daterangepicker({
+        locale: {
+              format: 'DD-MM-YYYY'
+        },
+        "alwaysShowCalendars": true,
+        "minDate": currentDate,
+        "maxDate": moment().add('months', 1),
+        autoApply: true,
+        autoUpdateInput: false
+    }, function(start, end, label) {
+
+      var selectedStartDate = start.format('DD-MM-YYYY');
+      var selectedEndDate = end.format('DD-MM-YYYY');
+
+      $checkinInput = $('#search_checkin');
+      $checkoutInput = $('#search_checkout');
+
+      $checkinInput.val(selectedStartDate);
+      $checkoutInput.val(selectedEndDate);
+
+      var checkOutPicker = $checkoutInput.data('daterangepicker');
+      checkOutPicker.setStartDate(selectedStartDate);
+      checkOutPicker.setEndDate(selectedEndDate);
+
+      var checkInPicker = $checkinInput.data('daterangepicker');
+      checkInPicker.setStartDate(selectedStartDate);
+      checkInPicker.setEndDate(selectedEndDate);
+
+    });
+
+} // End Daterange Picker
+    </script>
    <div id="calendar"> </div>
 
 
-   {% endblock %}
+    {% endblock %}

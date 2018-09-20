@@ -36,8 +36,8 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
-    first_name = db.Column(db.String(30), unique=True)
-    last_name = db.Column(db.String(30), unique=True)
+    first_name = db.Column(db.String(30))
+    last_name = db.Column(db.String(30))
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
     roles = db.relationship('Role', secondary=roles_users,
@@ -113,6 +113,7 @@ security = Security(app, user_datastore)
 
 
 @app.route('/')
+@login_required
 def index():
     today = datetime.date.today()
     rooms_list = Room.query.all()
@@ -148,7 +149,6 @@ def users():
         return render_template('users/users.html', users=user_list)
 
 
-
 @app.route('/rooms/<color>')
 @login_required
 def room_info(color):
@@ -163,6 +163,19 @@ def room_info(color):
 @login_required
 def rooms():
     rooms_list = Room.query.all()
+    if rooms_list == []:
+        return render_template('rooms/sorry.html')
+    else:
+        return render_template('rooms/rooms.html', rooms=rooms_list)
+
+
+@app.route('/rooms/search', methods=['GET'])
+@login_required
+def room_search():
+    date_start = request.args.get('start', '')
+    date_end = request.args.get('end', '')
+    adults = request.args.get('adults', '')
+    rooms_list = Room.query.filter((Room.max_people + Room.extra_places) >= adults)
     if rooms_list == []:
         return render_template('rooms/sorry.html')
     else:
@@ -281,6 +294,7 @@ def get_reservation_list():
         print("Error")
 
     return reservation_list
+
 
 if __name__ == "__main__":
     app.run()
