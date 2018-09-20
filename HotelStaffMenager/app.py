@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import and_, or_, not_
 from flask import request, redirect, url_for, render_template
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 from flask_moment import Moment
@@ -169,6 +170,14 @@ def rooms():
         return render_template('rooms/rooms.html', rooms=rooms_list)
 
 
+def is_room_free(room_id, start, end):
+    stays_list = Stay.query.filter(and_(Stay.room_id==room_id, Stay.start_at <= end, Stay.end_at >= start)).one_or_none()
+    if stays_list is None:
+        return True
+    else:
+        return False
+
+
 @app.route('/rooms/search', methods=['GET'])
 @login_required
 def room_search():
@@ -176,10 +185,14 @@ def room_search():
     date_end = request.args.get('end', '')
     adults = request.args.get('adults', '')
     rooms_list = Room.query.filter((Room.max_people + Room.extra_places) >= adults)
-    if rooms_list == []:
+    rooms_free = []
+    for room in rooms_list:
+        if is_room_free(room.id,date_start,date_end):
+            rooms_free.append(room)
+    if rooms_free == []:
         return render_template('rooms/sorry.html')
     else:
-        return render_template('rooms/rooms.html', rooms=rooms_list)
+        return render_template('rooms/rooms.html', rooms=rooms_free)
 
 
 @app.route('/new_room', methods=['GET'])
@@ -275,10 +288,10 @@ def stays():
 def get_reservation_list():
     try:
         stays_list = Stay.query.all()
-        # Initialize a employee list
+        # Initialize a reservation list
         reservation_list = []
 
-        # create a instances for filling up employee list
+        # create a instances for filling up reservation list
         for stay in stays_list:
             res = {
                 'title': "pokój" + stay.room.color +"/" + stay.guest.last_name,

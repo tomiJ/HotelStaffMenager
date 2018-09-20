@@ -37,7 +37,8 @@
         {% endfor %}
     </table>
     --->
-   <div id="datepicker">
+   <div id="searchform">
+       <h3> Szukaj pokoju </h3>
        <form method="get" action="{{ url_for('room_search')}}">
            <p>
                Od <input type="text" name="start" id="search_checkin"/>
