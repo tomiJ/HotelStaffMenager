@@ -1,4 +1,56 @@
 {% extends "layouts/layout1.html" %}
+
+
+
+{% block head %}
+<style>
+    #content
+    {
+
+        width:1200px;
+        margin-left:auto;
+        margin-right:auto;
+        padding:10px;
+
+    }
+
+    .roomListItem
+    {
+        display:block;
+        text-align: center;
+        margin-top:15px;
+        float:left;
+
+    }
+
+    .selectionOfStatus
+    {
+        width:200px;
+        height:100px;
+        margin-top:15px;
+        text-align: center;
+        float:left;
+        margin-left:20px;
+    }
+
+    .rented
+    {
+        width:200px;
+        height:100px;
+        margin-top:15px;
+        text-align: center;
+        float:left;
+        margin-left:20px;
+    }
+    h3
+    {
+        font-size: 20px;
+    }
+
+</style>
+
+{% endblock %}
+
 {% block title %}
 Pokoje
 {% endblock %}
@@ -6,14 +58,45 @@ Pokoje
 
 
 {% for room in rooms %}
-<div class="roomListItem">
-    <h2><a href="{{ url_for('rooms') }}/{{ room.color}}"> {{room.color}}</a></h2>
-    <p> miejsc: {{room.max_people}} + {{room.extra_places}} </p>
+<div id="content">
 
-    <p> stan: </p>
+    <div class="roomListItem">
+        <table border="4" cellpadding="5" >
+            <tr>
+                <th>Numer</th> <th>Kolor</th> <th>Ilość miejsc</th> <th>Wanna</th> <th>Prysznic</th> <th width="60">Pies</th> <th>Czy zajęty</th>
+            </tr>
+            <tr>
+                <td><p>{{room.number}}</p></td>
+                <td width="200px" height="50px"><h3><a href="{{ url_for('rooms') }}/{{ room.color}}"> {{room.color}} </a></h3></td>
+
+                <td width="30px"><p> {{room.max_people}} + {{room.extra_places}} </p></td>
+
+                <td><p>{{room.bath}}</p></td>
+                <td><p>{{room.shower}}</p></td>
+                <td><p>{{room.dog}}</p></td>
+
+
+                <td>
+                    <p>{{room.rented}}</p>
+                </td>
+
+            </tr>
+        </table>
+
+
+    </div>
+
+    <div class="rented">
+        <form action="{{ url_for('send_state', id=room.id) }}" method="post">
+            <p>Wybierz "Czy zajęty"</p>
+
+            <input type="submit" value="{{room.rented}}" />
+        </form>
+    </div>
+
+    <div style="clear:both;"></div>
 </div>
-
-
 {% endfor %}
+
 
 {% endblock %}

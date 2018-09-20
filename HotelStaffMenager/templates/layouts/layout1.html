@@ -2,7 +2,6 @@
 <html lang="en">
 
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -15,6 +14,8 @@
 
     <title> {% block title %}{% endblock %}</title>
 
+
+
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -26,11 +27,12 @@
     <!-- Plugin CSS -->
     <link href="/static/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
 
+
     <!-- Custom styles for this template -->
     <link href="/static/css/freelancer.min.css" rel="stylesheet">
     <link href="/static/css/fullcalendar.css" rel="stylesheet">
 
-
+    {% block head %}{% endblock %}
   </head>
   <body>
 
@@ -88,6 +90,8 @@
     <!-- Custom scripts for this template -->
     <script src="/static/js/freelancer.min.js"></script>
    <script src='/static/js/calendar_loader.js'></script>
+
+
 
 
   </body>
