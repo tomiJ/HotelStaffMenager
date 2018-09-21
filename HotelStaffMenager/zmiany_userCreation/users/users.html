@@ -1,0 +1,31 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Pracownicy
+{% endblock %}
+{% block content %}
+
+<table>
+    <tr>
+        <th> Email/Login </th>
+        <th> Imię </th>
+        <th> Nazwisko </th>
+        <th> Stanowisko </th>
+        <th> Utworzono</th>
+        <th> Aktywny</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td> {{user.email}} </td>
+        <td> {{user.first_name}}  </td>
+        <td> {{user.last_name}} </td>
+         <td> {{user.role}} </td>
+        <td> {{user.confirmed_at }}</td>
+        <td> {{user.active }}</td>
+        <td> <a href="edit_user/id/{{user.id}}">Edytuj</a> </td>
+        <td> <a href="/deactivate_user/id/{{user.id}}">Usuń</a></td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
