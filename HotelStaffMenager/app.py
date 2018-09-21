@@ -188,6 +188,7 @@ def room_search():
     date_start = request.args.get('start', '')
     date_end = request.args.get('end', '')
     adults = request.args.get('adults', '')
+    reservation_params = [date_start,date_end,adults]
     rooms_list = Room.query.filter((Room.max_people + Room.extra_places) >= adults)
     rooms_free = []
     for room in rooms_list:
@@ -196,7 +197,7 @@ def room_search():
     if rooms_free == []:
         return render_template('rooms/sorry.html')
     else:
-        return render_template('rooms/rooms.html', rooms=rooms_free)
+        return render_template('rooms/rooms.html', rooms=rooms_free, reservation_mode=True, params=reservation_params)
 
 
 @app.route('/new_room', methods=['GET'])
@@ -235,10 +236,6 @@ def send_state(id):
     return redirect( url_for('rooms'))
 
 
-
-
-
-
 @app.route('/new_guest', methods=['GET'])
 @login_required
 def new_guest():
@@ -275,10 +272,10 @@ def guest_info(id):
         return render_template('guests/guest_info.html', guest=guest, stays=stays)
 
 
-@app.route('/new_stay/room/<room_id>/from<date_start>to<date_end>', methods=['GET'])
+@app.route('/new_stay/room/<room_id>/from<date_start>to<date_end>/people<adults>', methods=['GET'])
 @login_required
-def new_stay(room_id, date_start, date_end):
-    return render_template('stays/new.html', fr=date_start, to=date_end, room=Room.query.filter_by(id=room_id).one_or_none())
+def new_stay(room_id, date_start, date_end, adults):
+    return render_template('stays/new.html', fr=date_start, to=date_end, adults=adults, room=Room.query.get(room_id))
 
 
 @app.route('/new_stay/room/<room_id>', methods=['POST'])
