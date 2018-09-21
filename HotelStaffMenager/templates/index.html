@@ -5,38 +5,7 @@
     {% endblock %}
 
    {% block content %}
-    <!---
-    TABLE WITH RESERVATION BUTTONS - DEPRECATED
-    <table>
-        <tr>
-            <th>Pokój</th>
-            <th>{{moment().format('dddd')}}</th>
-            <th>{{moment(today + datetime.timedelta(days=1)).format('dddd')}}</th>
-            <th>{{moment(today + datetime.timedelta(days=2)).format('dddd')}}</th>
-            <th>{{moment(datetime.date.today() + datetime.timedelta(days=3)).format('dddd')}}</th>
-            <th>{{moment(datetime.date.today() + datetime.timedelta(days=4)).format('dddd')}}</th>
-            <th>{{moment(datetime.date.today() + datetime.timedelta(days=5)).format('dddd')}}</th>
-            <th>{{moment(datetime.date.today() + datetime.timedelta(days=6)).format('dddd')}}</th>
-
-
-        </tr>
-           {% for room in rooms %}
-
-        <tr>
-            <th>{{room.color}}</th>
-            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today(), date_end = datetime.date.today() + datetime.timedelta(days=1) )}}">Rezerwuj</a></td>
-            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=1), date_end = datetime.date.today() + datetime.timedelta(days=2) )}}">Rezerwuj</a></td>
-            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=2), date_end = datetime.date.today() + datetime.timedelta(days=3) )}}">Rezerwuj</a></td>
-            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=3), date_end = datetime.date.today() + datetime.timedelta(days=4) )}}">Rezerwuj</a></td>
-            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=4), date_end = datetime.date.today() + datetime.timedelta(days=5) )}}">Rezerwuj</a></td>
-            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=5), date_end = datetime.date.today() + datetime.timedelta(days=6) )}}">Rezerwuj</a></td>
-            <td><a href = "{{ url_for('.new_stay', room_id = room.id, date_start = datetime.date.today() + datetime.timedelta(days=6), date_end = datetime.date.today() + datetime.timedelta(days=7) )}}">Rezerwuj</a></td>
-
-
-        </tr>
-        {% endfor %}
-    </table>
-    --->
+ 
    <div id="searchform">
        <h3> Szukaj pokoju </h3>
        <form method="get" action="{{ url_for('room_search')}}">
@@ -56,21 +25,21 @@
     <script>
     if($('#search_checkin, #search_checkout').length){
 
-    var currentDate = moment().format("DD-MM-YYYY");
+    var currentDate = moment().format("YYYY-MM-DD");
 
     $('#search_checkin, #search_checkout').daterangepicker({
         locale: {
-              format: 'DD-MM-YYYY'
+              format: 'YYYY-MM-DD'
         },
         "alwaysShowCalendars": true,
         "minDate": currentDate,
-        "maxDate": moment().add('months', 1),
+        "maxDate": moment().add('months', 6),
         autoApply: true,
         autoUpdateInput: false
     }, function(start, end, label) {
 
-      var selectedStartDate = start.format('DD-MM-YYYY');
-      var selectedEndDate = end.format('DD-MM-YYYY');
+      var selectedStartDate = start.format('YYYY-MM-DD');
+      var selectedEndDate = end.format('YYYY-MM-DD');
 
       $checkinInput = $('#search_checkin');
       $checkoutInput = $('#search_checkout');
@@ -90,7 +59,7 @@
 
 } // End Daterange Picker
     </script>
-   <div id="calendar"> </div>
+   <div class="container" id="calendar"> </div>
 
 
     {% endblock %}

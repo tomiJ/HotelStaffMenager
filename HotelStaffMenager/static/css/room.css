@@ -1,6 +1,37 @@
+.roomListItem{
+    background-color: #F5FBFF;
+    margin-bottom:10px;
+    padding-top:10px;
+}
+
+.roomStateButton{
+    width:60px;
+    height:60px;
+    border:None;
+    right:0px
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+#roomFree{
+    background-color: #09A129;
+}
+
+#roomTaken{
+    background-color: #AC4250;
+}
+
 #content
 {
     margin-left:150px;
     margin-right:150px;
+
+}
+
+#roomImg{
+    height:120px;
+    float:right;
 }
 
